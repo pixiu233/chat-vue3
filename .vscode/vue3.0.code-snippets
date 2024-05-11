@@ -1,0 +1,34 @@
+{
+  "Vue3.0+defineComponent快速生成模板": {
+    "prefix": "Vue3.0",
+    "body": [
+      "<template>",
+      "\t<div></div>",
+      "</template>\n",
+      "<script>",
+      "import { defineComponent, toRefs, reactive, onMounted, onBeforeUnmount } from 'vue'",
+      "import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';",
+      "export default defineComponent({",
+      "\tname: 'Componentname',",
+      "\tcomponents: {},",
+      "\tcomputed: {},",
+      "\tprops: {},",
+      "\tdata() { return {} },",
+      "\tmethods: {},",
+      "\tsetup(props, { attrs, emit, expose, slots }) {",
+      "\t\tconst state = reactive({ text: 'wewe' });\n",
+      "\t\tonMounted(() => {});",
+      "\t\tonBeforeUnmount(() => {});",
+      "\t\treturn {",
+      "\t\t\t...toRefs(state),",
+      "\t\t}",
+      "\t}",
+      "})",
+      "</script>\n",
+      "<style lang='scss' scoped>\n",
+      "</style>",
+      "$2"
+    ],
+    "description": "Vue3.0"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "Vue2.0+快速生成模板": {
+    "prefix": "Vue2.0",
+    "body": [
+      "<template>",
+      "\t<div></div>",
+      "</template>\n",
+      "<script>",
+      "export default {",
+      "\tname: 'Name',",
+      "\tcomponents: {},",
+      "\tcomputed: {},",
+      "\tprops: {},",
+      "\tdata() { return {} },",
+      "\tmethods: {},",
+      "}",
+      "</script>\n",
+      "<style lang='scss' scoped>\n",
+      "</style>",
+      "$2"
+    ],
+    "description": "Vue2.0"
+  }
+}
