@@ -4,7 +4,6 @@ import storage from "@/utils/localforage/index";
 import NProgress from "@/utils/progress";
 import { ACCESS_TOKEN } from "@/constants/index";
 import { errorHandler } from "./tools";
-
 const service = axios.create({
   // baseURL: "https://apichat.fun/", // 生产
   // baseURL: "http://localhost:8081/", // 开发
@@ -15,6 +14,7 @@ const whiteList = ["/imCallback", "/rest-api"];
 // 请求拦截器
 service.interceptors.request.use((config) => {
   const { url } = config;
+
   const isBar = whiteList.includes(url);
   // 开启进度条动画
   !isBar && NProgress.start();
@@ -26,12 +26,15 @@ service.interceptors.request.use((config) => {
 
 // 响应拦截器
 service.interceptors.response.use((response) => {
+  console.log(response);
   const { data, config, status } = response;
-  const { code, msg } = data;
+  console.log("response", response);
+  const { code, message } = data;
   // 关闭进度条动画
   NProgress.done();
-  if (status === 200) {
-    const ToKen = response.headers["x-token"];
+  if (code === 200) {
+    const ToKen = data.data.token;
+    console.log(ToKen);
     if (ToKen) {
       storage.set(ACCESS_TOKEN, ToKen);
     }

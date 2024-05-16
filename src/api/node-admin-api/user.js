@@ -6,7 +6,7 @@ import storage from "@/utils/localforage/index";
 // 登录接口
 export const login = (data) => {
   return http({
-    url: "/login",
+    url: "auth/login",
     method: "post",
     data,
   });

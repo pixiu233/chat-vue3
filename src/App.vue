@@ -26,10 +26,12 @@ export default defineComponent({
   },
   mounted() {
     // dispatch("reloadRoute");
+
     this.loginAgain(this.$route);
   },
   methods: {
     loginAgain({ name }) {
+      console.log(name, "ccc");
       if (!name) return;
       this.$nextTick(() => {
         if (name === "login") return;

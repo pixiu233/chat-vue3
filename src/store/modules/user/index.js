@@ -51,10 +51,10 @@ const user = {
       if (code == 200) {
         window.TIMProxy.init();
         dispatch("GET_MENU");
-        dispatch("TIM_LOG_IN", {
-          userID: result.username,
-          userSig: result.userSig,
-        });
+        // dispatch("TIM_LOG_IN", {
+        //   userID: result.username,
+        //   userSig: result.userSig,
+        // });
         commit("UPDATE_USER_INFO", { key: "user", value: result });
         router.push("/chatstudio");
         verification(code, msg);
@@ -67,23 +67,23 @@ const user = {
       const result = await register(data);
     },
     // 登录
-    async LOG_IN({ state, commit, dispatch }, data) {
-      const { code, msg, result } = await login(data);
-      console.log({ code, msg, result }, "登录信息");
+    async LOG_IN({ state, commit, dispatch }, _data) {
+      const { code, message, data } = await login(_data);
+      console.log({ code, message, data }, "登录信息");
       if (code == 200) {
         window.TIMProxy.init();
         dispatch("GET_MENU");
-        dispatch("TIM_LOG_IN", {
-          userID: result.username,
-          userSig: result.userSig,
-        });
-        commit("UPDATE_USER_INFO", { key: "user", value: result });
+        // dispatch("TIM_LOG_IN", {
+        //   userID: data.username,
+        //   userSig: data.id,
+        // });
+        commit("UPDATE_USER_INFO", { key: "user", value: data });
         // 保存登录信息 keep
         data?.keep && storage.set(ACCOUNT, data);
         router.push("/chatstudio");
-        verification(code, msg);
+        verification(code, message);
       } else {
-        verification(code, msg);
+        verification(code, message);
       }
     },
     // 退出登录
@@ -96,19 +96,19 @@ const user = {
       });
     },
     // 登录im
-    async TIM_LOG_IN({ state, commit, dispatch }, user) {
-      try {
-        const { code, data } = await chat.login(user);
-        if (code == 0) {
-          console.log("[chat] im登录成功 login", data);
-        } else {
-          dispatch("LOG_OUT");
-        }
-      } catch (error) {
-        dispatch("LOG_OUT");
-        console.log("[chat] im登录失败 login", error);
-      }
-    },
+    // async TIM_LOG_IN({ state, commit, dispatch }, user) {
+    //   try {
+    //     const { code, data } = await chat.login(user);
+    //     if (code == 0) {
+    //       console.log("[chat] im登录成功 login", data);
+    //     } else {
+    //       dispatch("LOG_OUT");
+    //     }
+    //   } catch (error) {
+    //     dispatch("LOG_OUT");
+    //     console.log("[chat] im登录失败 login", error);
+    //   }
+    // },
     // 退出im
     async TIM_LOG_OUT({ commit, dispatch }) {
       const { code, data } = await chat.logout();
@@ -128,7 +128,7 @@ const user = {
           const { username: userID, userSig } = user;
           console.log({ userID, userSig }, "LOG_IN_AGAIN");
           window.TIMProxy.init();
-          dispatch("TIM_LOG_IN", { userID, userSig });
+          // dispatch("TIM_LOG_IN", { userID, userSig });
         } else {
           dispatch("LOG_OUT");
         }
