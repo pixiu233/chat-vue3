@@ -1,11 +1,12 @@
-import tim from "@/utils/IM/im-sdk/tim";
+// export const getUserProfile = async (userID) => {
+//   const { code, data } = await tim.getUserProfile({
+//     userIDList: userID,
+//   });
+//   return { code, data };
+// };
 
-export const getUserProfile = async (userID) => {
-  const { code, data } = await tim.getUserProfile({
-    userIDList: userID,
-  });
-  return { code, data };
-};
+import tim from "@/utils/IM/im-sdk/tim";
+import http from "@/utils/http/index";
 
 /**
  * 更新我的个人资料
@@ -22,4 +23,12 @@ export const updateMyProfile = async (profile) => {
     ...profile,
   });
   return { code, data };
+};
+
+export const getUserProfile = (data) => {
+  return http({
+    url: "friend/get_friend",
+    method: "post",
+    data,
+  });
 };

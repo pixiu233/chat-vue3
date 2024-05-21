@@ -1,6 +1,7 @@
 <template>
   <div class="flex">
     <div class="aside">
+      <Search :class="{ 'opacity-0': arrowRight }" />
       <ListGrid />
     </div>
     <div class="main">
@@ -19,7 +20,10 @@ import ListGrid from "./ListGrid";
 import emitter from "@/utils/mitt-bus";
 import { restApi } from "@/api/node-admin-api/index";
 import { getUserProfile } from "@/api/im-sdk-api/index";
-import { mapState } from "vuex";
+import { mapState, computed } from "vuex";
+import { useStore } from "vuex";
+import { useState } from "@/utils/hooks/useMapper";
+import Search from "./Search.vue";
 
 export default {
   name: "AddressBook",
@@ -31,6 +35,7 @@ export default {
     };
   },
   components: {
+    Search,
     ListGrid,
     CardGrid,
   },
@@ -40,18 +45,20 @@ export default {
     }),
   },
   async mounted() {
+    console.log(123123123);
     this.init();
     emitter.on("onActive", (icon) => {
       this.active = icon;
     });
     // this.getGroupList();
-    this.$store.dispatch("getGroupList");
+    // this.$store.dispatch("getGroupList");
   },
   methods: {
     async init() {
-      let list = ["huangyk", "admin", "linjx", "@RBT#001", "jinwx", "zhangal"];
+      const { state } = useStore();
       // 获取好友列表
-      const { code, data } = await getUserProfile(list);
+      const { code, data } = await getUserProfile({ userId: state.data.user.id });
+      console.log("data", data);
       this.friend = data;
     },
     async getGroupList() {
@@ -82,7 +89,7 @@ export default {
 
 <style lang="scss" scoped>
 .aside {
-  width: 180px;
+  width: 280px;
   min-width: 180px;
   height: 100%;
   padding: 3px 8px 8px;

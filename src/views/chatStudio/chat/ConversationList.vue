@@ -94,6 +94,7 @@ const contextMenuItemInfo = ref([]);
 
 const { dispatch, commit } = useStore();
 const { tabList } = useGetters(["tabList"]);
+
 const { activetab, chat, userProfile, sessionDraftMap, postponeUnread, arrowRight } = useState({
   sessionDraftMap: (state) => state.conversation.sessionDraftMap,
   arrowRight: (state) => state.settings.arrowRight,
