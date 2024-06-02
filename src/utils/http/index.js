@@ -19,8 +19,9 @@ service.interceptors.request.use((config) => {
   // 开启进度条动画
   !isBar && NProgress.start();
   const token = storage.get(ACCESS_TOKEN);
+  console.log(token, "token");
   // 携带自定义请求头token到后台
-  if (token) config.headers["authorization"] = token;
+  if (token) config.headers["authorization"] = "Bearer " + token;
   return config;
 }, errorHandler);
 
@@ -28,7 +29,6 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use((response) => {
   console.log(response);
   const { data, config, status } = response;
-  console.log("response", response);
   const { code, message } = data;
   // 关闭进度条动画
   NProgress.done();

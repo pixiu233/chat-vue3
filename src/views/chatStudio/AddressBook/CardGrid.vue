@@ -10,7 +10,7 @@
     </div>
     <div class="right-item">
       <p>{{ item.Name || item.name || item.nick }}</p>
-      <el-icon @click="onFriend({ id: item.GroupId || item.groupID || item.userID })">
+      <el-icon @click="onFriend({ id: item.GroupId || item.groupID || item.receiver.userId })">
         <Position />
       </el-icon>
     </div>
@@ -38,7 +38,7 @@ export default {
     onFriend({ id, type = "C2C" }) {
       // "GROUP" : "C2C";
       this.$store.commit("TAGGLE_OUE_SIDE", "message");
-      this.$store.dispatch("CHEC_OUT_CONVERSATION", { convId: `${this.type}${id}` });
+      this.$store.dispatch("CHEC_OUT_CONVERSATION", { convId: `${id}` });
       setTimeout(() => {
         const dom = document.getElementById(`message_C2C${id}`);
         if (!dom) return;

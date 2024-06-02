@@ -1,4 +1,5 @@
 import tim from "@/utils/IM/im-sdk/tim";
+import http from "@/utils/http/index";
 
 // 获取 SDK 缓存的好友列表
 export const getFriendList = async (params) => {
@@ -59,7 +60,7 @@ export const setMessageRemindType = async (params) => {
       messageRemindType: isDisable ? "AcceptAndNotify" : "AcceptNotNotify",
     };
   }
-  let { code, data } = await tim.setMessageRemindType(parameter);
+  let { code, data } = await http(parameter);
   if (code === 0) {
     return data;
   }
@@ -68,7 +69,12 @@ export const setMessageRemindType = async (params) => {
 export const getConversationProfile = async (params) => {
   try {
     const { conversationID } = params;
-    const { code, data } = await tim.getConversationProfile(conversationID);
+    //查询聊天记录
+    const { code, data } = await http({
+      url: `/friend_message/get_friend_message?receiverId=${conversationID}`,
+      method: "get",
+    });
+
     if (code == 0) {
       return data;
     }
@@ -76,6 +82,7 @@ export const getConversationProfile = async (params) => {
     console.log(error);
   }
 };
+
 // 消息已读上报
 export const setMessageRead = async (convId) => {
   let promise = tim.setMessageRead({ conversationID: convId });
